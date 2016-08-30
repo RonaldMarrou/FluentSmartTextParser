@@ -8,9 +8,16 @@ namespace FluentSmartTextParser.Impl
 {
     public class SmartTextParser : ISmartTextParser
     {
-        public ParserResult<T> Parse<T>(string file, Dictionary<string, string> schemaFields, List<SmartTextParserProperty> properties)
+        private readonly IParserFactory _parserFactory;
+
+        public SmartTextParser(IParserFactory parserFactory)
         {
-            throw new NotImplementedException();
+            _parserFactory = parserFactory;
+        }
+
+        public ParserResult<T> Parse<T>(string file, TextSchemaType textSchemaType, Dictionary<string, string> schemaFields, List<SmartTextParserProperty> properties)
+        {
+            return _parserFactory.Get(textSchemaType).Parse<T>(file, schemaFields, properties);
         }
     }
 }

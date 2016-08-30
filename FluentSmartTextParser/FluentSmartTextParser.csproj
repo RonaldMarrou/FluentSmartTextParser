@@ -40,15 +40,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Impl\DelimitedParser.cs" />
     <Compile Include="Impl\FluentSmartTextParser.cs" />
     <Compile Include="Impl\Fluent\ParserDescriptor.cs" />
     <Compile Include="Impl\Fluent\SmartTextParserDescriptor.cs" />
+    <Compile Include="Impl\ParserFactory.cs" />
+    <Compile Include="Impl\PositionalParser.cs" />
     <Compile Include="Impl\SmartTextParser.cs" />
     <Compile Include="Interface\Delimited\IDelimitedPropertyDescriptor.cs" />
     <Compile Include="Interface\IDescriptor.cs" />
     <Compile Include="Interface\IFluentSmartTextParser.cs" />
     <Compile Include="Interface\Delimited\IDelimitedDescriptor.cs" />
+    <Compile Include="Interface\IParser.cs" />
     <Compile Include="Interface\IParserDescriptor.cs" />
+    <Compile Include="Interface\IParserFactory.cs" />
     <Compile Include="Interface\Positional\IPositionalPropertyDescriptor.cs" />
     <Compile Include="Interface\ISmartTextParser.cs" />
     <Compile Include="Interface\Positional\IPositionalDescriptor.cs" />

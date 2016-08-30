@@ -18,7 +18,7 @@ namespace FluentSmartTextParser.Model.Internal
 
         public string File { get; set; }
 
-        public TextSchemaType SchemaType { get; set; }
+        public TextSchemaType TextSchemaType { get; set; }
 
         public Dictionary<string, string> SchemaFields { get; set; }
 

@@ -129,7 +129,7 @@ namespace FluentSmartTextParser.Impl.Fluent
                 throw new ArgumentNullException(nameof(delimitedBy));
             }
 
-            _context.SchemaType = TextSchemaType.DelimitedByString;
+            _context.TextSchemaType = TextSchemaType.DelimitedByString;
             _context.SchemaFields.Add("DelimitedBy", delimitedBy);
 
             return this;
@@ -137,7 +137,7 @@ namespace FluentSmartTextParser.Impl.Fluent
 
         public IPositionalDescriptor Positional()
         {
-            _context.SchemaType = TextSchemaType.Positional;
+            _context.TextSchemaType = TextSchemaType.Positional;
 
             return this;
         }
