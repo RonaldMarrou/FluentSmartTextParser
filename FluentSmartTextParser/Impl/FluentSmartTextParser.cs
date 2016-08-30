@@ -15,7 +15,7 @@ namespace FluentSmartTextParser.Impl
 
         public IDescriptor File(string file)
         {
-            return new SmartTextParserDescriptor(file);
+            return new SmartTextParserDescriptor(file, _smartTextParser);
         }
     }
 }

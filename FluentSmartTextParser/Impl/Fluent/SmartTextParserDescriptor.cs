@@ -5,6 +5,7 @@ using FluentSmartTextParser.Model;
 using FluentSmartTextParser.Model.Internal;
 using FluentSmartTextParser.Interface.Delimited;
 using FluentSmartTextParser.Interface.Positional;
+using System.Collections.Generic;
 
 namespace FluentSmartTextParser.Impl.Fluent
 {
@@ -12,9 +13,9 @@ namespace FluentSmartTextParser.Impl.Fluent
     {
         private readonly SmartTextParserContext _context;
 
-        public SmartTextParserDescriptor(string file)
+        public SmartTextParserDescriptor(string file, ISmartTextParser smartTextParser)
         {
-            _context = new SmartTextParserContext()
+            _context = new SmartTextParserContext(smartTextParser)
             {
                 File = file
             };
@@ -43,7 +44,7 @@ namespace FluentSmartTextParser.Impl.Fluent
                 throw new ArgumentNullException(nameof(name));
             }
 
-            if (_context.DelimitedProperties.Any(x => x.Name.Equals(name)))
+            if (_context.Properties.Any(x => x.Name.Equals(name)))
             {
                 throw new InvalidOperationException($"Property {name} can not be added more than once");
             }
@@ -53,27 +54,25 @@ namespace FluentSmartTextParser.Impl.Fluent
                 throw new InvalidOperationException($"Start Position can not be greather or equal than End Position: Start Position={startPosition}, End Position={endPosition}");
             }
 
-            _context.PositionProperties.Add(new SmartTextParserPositionProperty()
+            var property = new SmartTextParserProperty()
             {
                 Type = type,
                 Name = name,
-                StartPosition = startPosition,
-                EndPosition = endPosition,
+                Positions = new Dictionary<string, int> ()
+                {
+                    { "StartPosition", startPosition },
+                    { "EndPosition", endPosition }
+                },
                 MinLenght = minLenght,
                 MaxLenght = maxLenght,
                 Required = required
-            });
+            };
+
+            _context.Properties.Add(property);
         }
 
 
         #endregion
-
-        public IPositionalDescriptor Positional()
-        {
-            _context.SchemaType = TextSchemaType.Positional;
-
-            return this;
-        }
 
         #region Delimited Properties
 
@@ -98,23 +97,30 @@ namespace FluentSmartTextParser.Impl.Fluent
                 throw new ArgumentNullException(nameof(name));
             }
 
-            if (_context.DelimitedProperties.Any(x => x.Name.Equals(name)))
+            if (_context.Properties.Any(x => x.Name.Equals(name)))
             {
                 throw new InvalidOperationException($"Property {name} can not be added more than once");
             }
 
-            _context.DelimitedProperties.Add(new SmartTextParserDelimitedProperty()
+            var property = new SmartTextParserProperty()
             {
-                Type = PropertyType.Decimal,
+                Type = type,
                 Name = name,
-                Position = position,
+                Positions = new Dictionary<string, int>()
+                {
+                    { "Position", position }
+                },
                 MinLenght = minLenght,
                 MaxLenght = maxLenght,
                 Required = required
-            });
+            };
+
+            _context.Properties.Add(property);
         }
 
         #endregion
+
+        #region Schema
 
         public IDelimitedDescriptor DelimitedBy(string delimitedBy)
         {
@@ -124,13 +130,27 @@ namespace FluentSmartTextParser.Impl.Fluent
             }
 
             _context.SchemaType = TextSchemaType.DelimitedByString;
+            _context.SchemaFields.Add("DelimitedBy", delimitedBy);
 
             return this;
         }
+
+        public IPositionalDescriptor Positional()
+        {
+            _context.SchemaType = TextSchemaType.Positional;
+
+            return this;
+        }
+
+        #endregion
+
+        #region Map
 
         public IParserDescriptor<T> MapTo<T>()
         {
             return new ParseDescriptor<T>(_context);
         }
+
+        #endregion
     }
 }

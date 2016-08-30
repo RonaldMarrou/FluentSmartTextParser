@@ -1,35 +1,27 @@
-﻿using System.Collections.Generic;
+﻿using FluentSmartTextParser.Interface;
+using System.Collections.Generic;
 
 namespace FluentSmartTextParser.Model.Internal
 {
     public class SmartTextParserContext
     {
-        public SmartTextParserContext()
+        public SmartTextParserContext(ISmartTextParser smartTextParser)
         {
-            _delimitedProperties = new List<SmartTextParserDelimitedProperty>();
-            _positionProperties = new List<SmartTextParserPositionProperty>();
+            SchemaFields = new Dictionary<string, string>();
+
+            Properties = new List<SmartTextParserProperty>();
+
+            SmartTextParser = smartTextParser;
         }
+
+        public ISmartTextParser SmartTextParser { get; set; }
 
         public string File { get; set; }
 
         public TextSchemaType SchemaType { get; set; }
 
-        public string DelimitedBy { get; set; }
+        public Dictionary<string, string> SchemaFields { get; set; }
 
-        private List<SmartTextParserDelimitedProperty> _delimitedProperties;
-
-        public List<SmartTextParserDelimitedProperty> DelimitedProperties
-        {
-            get { return _delimitedProperties; }
-            private set { _delimitedProperties = value; }
-        }
-
-        private List<SmartTextParserPositionProperty> _positionProperties;
-
-        public List<SmartTextParserPositionProperty> PositionProperties
-        {
-            get { return _positionProperties; }
-            private set { _positionProperties = value; }
-        }
+        public List<SmartTextParserProperty> Properties { get; set; }
     }
 }

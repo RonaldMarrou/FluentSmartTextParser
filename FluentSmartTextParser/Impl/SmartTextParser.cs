@@ -2,19 +2,13 @@
 using FluentSmartTextParser.Interface;
 using FluentSmartTextParser.Model.Internal;
 using FluentSmartTextParser.Model;
+using System.Collections.Generic;
 
 namespace FluentSmartTextParser.Impl
 {
     public class SmartTextParser : ISmartTextParser
     {
-        private readonly SmartTextParserContext _context;
-
-        public SmartTextParser(SmartTextParserContext context)
-        {
-            _context = context;
-        }
-
-        public ParserResult<T> Parse<T>()
+        public ParserResult<T> Parse<T>(string file, Dictionary<string, string> schemaFields, List<SmartTextParserProperty> properties)
         {
             throw new NotImplementedException();
         }

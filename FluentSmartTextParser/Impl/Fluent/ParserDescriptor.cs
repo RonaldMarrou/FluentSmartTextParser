@@ -1,5 +1,4 @@
 ﻿using FluentSmartTextParser.Interface;
-using System;
 using FluentSmartTextParser.Model;
 using FluentSmartTextParser.Model.Internal;
 
@@ -16,7 +15,7 @@ namespace FluentSmartTextParser.Impl.Fluent
 
         public ParserResult<T> Parse()
         {
-            throw new NotImplementedException();
+            return _context.SmartTextParser.Parse<T>(_context.File, _context.SchemaFields, _context.Properties);
         }
     }
 }

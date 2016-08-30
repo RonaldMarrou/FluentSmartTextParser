@@ -52,10 +52,8 @@
     <Compile Include="Interface\Positional\IPositionalPropertyDescriptor.cs" />
     <Compile Include="Interface\ISmartTextParser.cs" />
     <Compile Include="Interface\Positional\IPositionalDescriptor.cs" />
-    <Compile Include="Model\Internal\SmartTextParserBaseProperty.cs" />
+    <Compile Include="Model\Internal\SmartTextParserProperty.cs" />
     <Compile Include="Model\Internal\SmartTextParserContext.cs" />
-    <Compile Include="Model\Internal\SmartTextParserDelimitedProperty.cs" />
-    <Compile Include="Model\Internal\SmartTextParserPositionProperty.cs" />
     <Compile Include="Model\ParserError.cs" />
     <Compile Include="Model\ParserResult.cs" />
     <Compile Include="Model\ParseResultStatus.cs" />
