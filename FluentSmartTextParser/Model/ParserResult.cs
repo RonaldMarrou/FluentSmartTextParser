@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace FluentSmartTextParser.Model
 {
-    public class ParseResult<T>
+    public class ParserResult<T>
     {
-        public ParseResult()
+        public ParserResult()
         {
-            _errors = new List<ParseError>();
+            _errors = new List<ParserError>();
             _results = new List<T>();
         }
 
         public ParserResultStatus Status { get; set; }
 
-        private List<ParseError> _errors;
+        private List<ParserError> _errors;
 
-        public List<ParseError> Errors
+        public List<ParserError> Errors
         {
             get { return _errors; }
             private set { _errors = value; }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FluentSmartTextParser.Model
 {
-    public class ParseError
+    public class ParserError
     {
         public string Property { get; set; }
 

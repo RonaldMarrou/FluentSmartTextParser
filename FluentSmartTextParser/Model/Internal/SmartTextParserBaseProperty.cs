@@ -12,8 +12,6 @@ namespace FluentSmartTextParser.Model.Internal
 
         public int MaxLenght { get; set; }
 
-        public Func<string, string> ExtraValidationMethod { get; set; }
-
         public bool Required { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using FluentSmartTextParser.Model.Internal;
 
 namespace FluentSmartTextParser.Impl.Fluent
 {
-    public class ParseDescriptor<T> : IParseDescriptor<T>
+    public class ParseDescriptor<T> : IParserDescriptor<T>
     {
         private readonly SmartTextParserContext _context;
 
@@ -14,7 +14,7 @@ namespace FluentSmartTextParser.Impl.Fluent
             _context = context;
         }
 
-        public ParseResult<T> Parse()
+        public ParserResult<T> Parse()
         {
             throw new NotImplementedException();
         }

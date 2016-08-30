@@ -2,8 +2,8 @@
 
 namespace FluentSmartTextParser.Interface
 {
-    public interface IParseDescriptor<T>
+    public interface IParserDescriptor<T>
     {
-        ParseResult<T> Parse();
+        ParserResult<T> Parse();
     }
 }

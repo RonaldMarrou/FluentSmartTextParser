@@ -41,23 +41,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Impl\FluentSmartTextParser.cs" />
-    <Compile Include="Impl\Fluent\ParseDescriptor.cs" />
+    <Compile Include="Impl\Fluent\ParserDescriptor.cs" />
     <Compile Include="Impl\Fluent\SmartTextParserDescriptor.cs" />
     <Compile Include="Impl\SmartTextParser.cs" />
-    <Compile Include="Interface\IDelimitedPropertyDescriptor.cs" />
+    <Compile Include="Interface\Delimited\IDelimitedPropertyDescriptor.cs" />
     <Compile Include="Interface\IDescriptor.cs" />
     <Compile Include="Interface\IFluentSmartTextParser.cs" />
-    <Compile Include="Interface\IDelimitedDescriptor.cs" />
-    <Compile Include="Interface\IParseDescriptor.cs" />
-    <Compile Include="Interface\IPositionalPropertyDescriptor.cs" />
+    <Compile Include="Interface\Delimited\IDelimitedDescriptor.cs" />
+    <Compile Include="Interface\IParserDescriptor.cs" />
+    <Compile Include="Interface\Positional\IPositionalPropertyDescriptor.cs" />
     <Compile Include="Interface\ISmartTextParser.cs" />
-    <Compile Include="Interface\IPositionalDescriptor.cs" />
+    <Compile Include="Interface\Positional\IPositionalDescriptor.cs" />
     <Compile Include="Model\Internal\SmartTextParserBaseProperty.cs" />
     <Compile Include="Model\Internal\SmartTextParserContext.cs" />
     <Compile Include="Model\Internal\SmartTextParserDelimitedProperty.cs" />
     <Compile Include="Model\Internal\SmartTextParserPositionProperty.cs" />
-    <Compile Include="Model\ParseError.cs" />
-    <Compile Include="Model\ParseResult.cs" />
+    <Compile Include="Model\ParserError.cs" />
+    <Compile Include="Model\ParserResult.cs" />
     <Compile Include="Model\ParseResultStatus.cs" />
     <Compile Include="Model\PropertyType.cs" />
     <Compile Include="Model\TextSchemaType.cs" />
