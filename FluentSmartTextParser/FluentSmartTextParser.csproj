@@ -40,10 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Impl\StringSetter.cs" />
     <Compile Include="Impl\DelimitedParser.cs" />
     <Compile Include="Impl\FluentSmartTextParser.cs" />
     <Compile Include="Impl\Fluent\ParserDescriptor.cs" />
     <Compile Include="Impl\Fluent\SmartTextParserDescriptor.cs" />
+    <Compile Include="Impl\DecimalSetter.cs" />
+    <Compile Include="Impl\IntegerSetter.cs" />
     <Compile Include="Impl\ParserFactory.cs" />
     <Compile Include="Impl\PositionalParser.cs" />
     <Compile Include="Impl\SmartTextParser.cs" />
@@ -54,6 +57,7 @@
     <Compile Include="Interface\IParser.cs" />
     <Compile Include="Interface\IParserDescriptor.cs" />
     <Compile Include="Interface\IParserFactory.cs" />
+    <Compile Include="Interface\ISetter.cs" />
     <Compile Include="Interface\Positional\IPositionalPropertyDescriptor.cs" />
     <Compile Include="Interface\ISmartTextParser.cs" />
     <Compile Include="Interface\Positional\IPositionalDescriptor.cs" />
