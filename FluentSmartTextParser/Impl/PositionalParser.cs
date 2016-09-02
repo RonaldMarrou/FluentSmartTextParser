@@ -13,7 +13,7 @@ namespace FluentSmartTextParser.Impl
             throw new NotImplementedException();
         }
 
-        TextSchemaType IParser.GetType()
+        TextSchemaType IParser.GetSchemaType()
         {
             return TextSchemaType.Positional;
         }

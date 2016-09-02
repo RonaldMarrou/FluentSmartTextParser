@@ -1,6 +1,5 @@
 ﻿using FluentSmartTextParser.Impl.Fluent;
 using FluentSmartTextParser.Interface;
-using System;
 
 namespace FluentSmartTextParser.Impl
 {

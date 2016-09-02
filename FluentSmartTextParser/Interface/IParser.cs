@@ -8,6 +8,6 @@ namespace FluentSmartTextParser.Interface
     {
         ParserResult<T> Parse<T>(string file, Dictionary<string, string> schemaFields, List<SmartTextParserProperty> properties);
 
-        TextSchemaType GetType();
+        TextSchemaType GetSchemaType();
     }
 }

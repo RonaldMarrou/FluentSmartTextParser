@@ -15,7 +15,7 @@ namespace FluentSmartTextParser.Impl
 
         public IParser Get(TextSchemaType textSchemaType)
         {
-            return _parsers.First(x => x.GetType() == textSchemaType);
+            return _parsers.First(x => x.GetSchemaType() == textSchemaType);
         }
     }
 }

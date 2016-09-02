@@ -1,5 +1,4 @@
-﻿using System;
-using FluentSmartTextParser.Interface;
+﻿using FluentSmartTextParser.Interface;
 using FluentSmartTextParser.Model;
 
 namespace FluentSmartTextParser.Impl

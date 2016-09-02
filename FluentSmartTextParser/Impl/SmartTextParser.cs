@@ -1,7 +1,6 @@
-﻿using System;
-using FluentSmartTextParser.Interface;
-using FluentSmartTextParser.Model.Internal;
+﻿using FluentSmartTextParser.Interface;
 using FluentSmartTextParser.Model;
+using FluentSmartTextParser.Model.Internal;
 using System.Collections.Generic;
 
 namespace FluentSmartTextParser.Impl

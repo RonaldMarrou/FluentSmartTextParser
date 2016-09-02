@@ -1,15 +1,16 @@
-﻿using FluentSmartTextParser.Interface;
-using System;
-using System.Collections.Generic;
+﻿using FluentSmartTextParser.Extension;
+using FluentSmartTextParser.Interface;
 using FluentSmartTextParser.Model;
 using FluentSmartTextParser.Model.Internal;
-using System.Reflection;
-using System.Linq;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 
 namespace FluentSmartTextParser.Impl
 {
-    public class DelimitedParser : IParser
+    public class DelimitedParser : BaseParser, IParser
     {
         private readonly ISetter[] _setters;
 
@@ -24,32 +25,14 @@ namespace FluentSmartTextParser.Impl
 
             PropertyInfo[] propertyInfoList = typeof(T).GetProperties(BindingFlags.Public);
 
-            var notFoundProperties = properties.Where(f => !propertyInfoList.Any(g => g.Name.Equals(f.Name)));
+            var className = typeof(T).Name;
 
-            foreach(var notFoundProperty in notFoundProperties)
+            var metadataErrors = GetMetadataErrorList(propertyInfoList, properties, className);
+
+            if(metadataErrors.Any())
             {
-                result.Errors.Add(new ParserError()
-                {
-                    Property = notFoundProperty.Name,
-                    Description = $"Property {notFoundProperty.Name} not found on class {typeof(T).Name} metadata"
-                });
-            }
+                metadataErrors.ForEach(f => result.Errors.Add(f));
 
-            var wrongNotRequiredProperties = properties.Where(f => !f.Required  && f.Type != PropertyType.String && propertyInfoList.Any(
-                x => x.Name.Equals(f) && (x.PropertyType.IsGenericType && x.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
-                ));
-
-            foreach (var wrongNotRequiredProperty in wrongNotRequiredProperties)
-            {
-                result.Errors.Add(new ParserError()
-                {
-                    Property = wrongNotRequiredProperty.Name,
-                    Description = $"Property {wrongNotRequiredProperty.Name} must be required due to class {typeof(T).Name} metadata"
-                });
-            }
-
-            if (result.Errors.Any())
-            {
                 return result;
             }
 
@@ -57,65 +40,67 @@ namespace FluentSmartTextParser.Impl
 
             var lineCount = 0;
 
-            foreach(var line in File.ReadAllLines(file))
+            foreach (var line in File.ReadAllLines(file))
             {
-                var values = line.Split(delimitedBy.ToCharArray());
+                var values = line.Split(new string[] { delimitedBy }, StringSplitOptions.None);
 
                 foreach(var property in properties)
                 {
                     int position = property.Positions["Position"];
 
-                    if (property.Required && values.Length <= position)
+                    if(property.Required)
                     {
-                        result.Errors.Add(new ParserError()
+                        if (values.Length <= position)
                         {
-                            Property = property.Name,
-                            Description = $"Property {property.Name} out of index at line {lineCount}"
-                        });
-                    }      
-                    
-                    if(property.Required && string.IsNullOrEmpty(values[position].Trim()))
-                    {
-                        result.Errors.Add(new ParserError()
+                            result.Errors.Add(new ParserError()
+                            {
+                                Property = property.Name,
+                                Description = $"Property {property.Name} out of index at line {lineCount}"
+                            });
+
+                            continue;
+                        }
+
+                        if (values[position].IsNullOrEmpty())
                         {
-                            Property = property.Name,
-                            Description = $"Required Property {property.Name} is empty at line {lineCount}"
-                        });
-                    }
+                            result.Errors.Add(new ParserError()
+                            {
+                                Property = property.Name,
+                                Description = $"Required Property {property.Name} is empty at line {lineCount}"
+                            });
 
-                    if(!property.Required && values.Length <= position)
+                            continue;
+                        }
+                    }                    
+
+                    if(values.Length > position)
                     {
-                        lineCount++;
+                        T newObject = (T)Activator.CreateInstance(typeof(T));
 
-                        continue;
-                    }
+                        var setter = _setters.First(x => x.GetType() == property.Type);
 
-                    T newObject = (T)Activator.CreateInstance(typeof(T));
+                        var isSet = setter.Set<T>(newObject, property.Name, values[position]);
 
-                    var setter = _setters.First(x => x.GetType() == property.Type);
-
-                    var isSet = setter.Set<T>(newObject, property.Name, values[position]);
-
-                    if(!isSet)
-                    {
-                        result.Errors.Add(new ParserError()
+                        if (!isSet)
                         {
-                            Property = property.Name,
-                            Description = $"Required Property {property.Name} at line {lineCount} is not a valid {setter.GetTypeName()}"
-                        });
-                    }
+                            result.Errors.Add(new ParserError()
+                            {
+                                Property = property.Name,
+                                Description = $"Required Property {property.Name} at line {lineCount} is not a valid {setter.GetTypeName()}"
+                            });
+                        }
 
-                    result.Results.Add(newObject);
+                        result.Results.Add(newObject);
+                    }                    
 
                     lineCount++;
                 }
             }
 
-
-            throw new Exception();
+            return result;
         }
 
-        TextSchemaType IParser.GetType()
+        public TextSchemaType GetSchemaType()
         {
             return TextSchemaType.DelimitedByString;
         }
