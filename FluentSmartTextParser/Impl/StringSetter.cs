@@ -9,17 +9,22 @@ namespace FluentSmartTextParser.Impl
         {
             var classProperty = typeof(T).GetProperty(propertyName);
 
+            if (classProperty == null)
+            {
+                return false;
+            }
+
             classProperty.SetValue(affectedObject, value);
 
             return true;
         }
 
-        PropertyType ISetter.GetType()
+        public PropertyType GetPropertyType()
         {
             return PropertyType.Decimal;
         }
 
-        public string GetTypeName()
+        public string GetPropertyTypeName()
         {
             return typeof(string).Name.ToUpper();
         }

@@ -6,8 +6,8 @@ namespace FluentSmartTextParser.Interface
     {
         bool Set<T>(T affectedObject, string propertyName, string value);
 
-        PropertyType GetType();
+        PropertyType GetPropertyType();
 
-        string GetTypeName();
+        string GetPropertyTypeName();
     }
 }

@@ -77,7 +77,7 @@ namespace FluentSmartTextParser.Impl
                     {
                         T newObject = (T)Activator.CreateInstance(typeof(T));
 
-                        var setter = _setters.First(x => x.GetType() == property.Type);
+                        var setter = _setters.First(x => x.GetPropertyType() == property.Type);
 
                         var isSet = setter.Set<T>(newObject, property.Name, values[position]);
 
@@ -86,7 +86,7 @@ namespace FluentSmartTextParser.Impl
                             result.Errors.Add(new ParserError()
                             {
                                 Property = property.Name,
-                                Description = $"Required Property {property.Name} at line {lineCount} is not a valid {setter.GetTypeName()}"
+                                Description = $"Required Property {property.Name} at line {lineCount} is not a valid {setter.GetPropertyTypeName()}"
                             });
                         }
 
