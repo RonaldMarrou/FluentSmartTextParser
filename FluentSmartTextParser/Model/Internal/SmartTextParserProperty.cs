@@ -4,6 +4,11 @@ namespace FluentSmartTextParser.Model.Internal
 {
     public class SmartTextParserProperty
     {
+        public SmartTextParserProperty()
+        {
+            Positions = new Dictionary<string, int>();
+        }
+
         public PropertyType Type { get; set; }
 
         public string Name { get; set; }

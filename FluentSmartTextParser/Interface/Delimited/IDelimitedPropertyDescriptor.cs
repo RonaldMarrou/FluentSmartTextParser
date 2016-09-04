@@ -4,7 +4,13 @@ namespace FluentSmartTextParser.Interface.Delimited
 {
     public interface IDelimitedPropertyDescriptor
     {
-        IDelimitedPropertyDescriptor AddProperty(PropertyType type, string name, int position, int minLenght, int maxLenght, bool required = false);
+        IDelimitedPositionDescriptor AddProperty(PropertyType type, string name);
+
+        IDelimitedPropertyDescriptor Required(bool required);
+
+        IDelimitedPropertyDescriptor MinimumLenght(int miniumLenght);
+
+        IDelimitedPropertyDescriptor MaximumLenght(int maximumLenght);
 
         IParserDescriptor<T> MapTo<T>();
     }

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace FluentSmartTextParser.Impl.Fluent
 {
-    public class SmartTextParserDescriptor : IDescriptor, IDelimitedDescriptor, IDelimitedPropertyDescriptor, IPositionalDescriptor, IPositionalPropertyDescriptor
+    public class SmartTextParserDescriptor : IDescriptor, IDelimitedDescriptor, IDelimitedPositionDescriptor, IDelimitedPropertyDescriptor, IPositionalDescriptor, IPositionalPropertyDescriptor
     {
         private readonly SmartTextParserContext _context;
 
@@ -21,14 +21,47 @@ namespace FluentSmartTextParser.Impl.Fluent
             };
         }
 
-        #region Positional Properties
+        #region Properties
 
-        public IPositionalPropertyDescriptor AddFirstProperty(PropertyType type, string name, int startPosition, int endPosition, int minLenght, int maxLenght, bool required = false)
+        public IDelimitedPropertyDescriptor Required(bool required)
         {
-            AddPositionProperty(type, name, startPosition, endPosition, minLenght, maxLenght, required);
+            var lastProperty = _context.Properties.Last();
+            lastProperty.Required = required;
 
             return this;
         }
+
+        public IDelimitedPropertyDescriptor Position(int position)
+        {
+            var lastProperty = _context.Properties.Last();
+
+            if (!lastProperty.Positions.Any(f => f.Key.Equals("Position")))
+            {
+                lastProperty.Positions.Add("Position", position);
+            }
+
+            return this;
+        }
+
+        public IDelimitedPropertyDescriptor MinimumLenght(int minimumLenght)
+        {
+            var lastProperty = _context.Properties.Last();
+            lastProperty.MinLenght = minimumLenght;
+
+            return this;
+        }
+
+        public IDelimitedPropertyDescriptor MaximumLenght(int maximumLenght)
+        {
+            var lastProperty = _context.Properties.Last();
+            lastProperty.MaxLenght = maximumLenght;
+
+            return this;
+        }
+
+        #endregion
+
+        #region Positional Properties
 
         public IPositionalPropertyDescriptor AddProperty(PropertyType type, string name, int startPosition, int endPosition, int minLenght, int maxLenght, bool required = false)
         {
@@ -76,21 +109,14 @@ namespace FluentSmartTextParser.Impl.Fluent
 
         #region Delimited Properties
 
-        public IDelimitedPropertyDescriptor AddFirstProperty(PropertyType type, string name, int position, int minLenght, int maxLenght, bool required = false)
+        public IDelimitedPositionDescriptor AddProperty(PropertyType type, string name)
         {
-            AddDelimitedProperty(type, name, position, minLenght, maxLenght, required);
+            AddDelimitedProperty(type, name);
 
             return this;
         }
 
-        public IDelimitedPropertyDescriptor AddProperty(PropertyType type, string name, int position, int minLenght, int maxLenght, bool required = false)
-        {
-            AddDelimitedProperty(type, name, position, minLenght, maxLenght, required);
-
-            return this;
-        }
-
-        private void AddDelimitedProperty(PropertyType type, string name, int position, int minLenght, int maxLenght, bool required = false)
+        private void AddDelimitedProperty(PropertyType type, string name)
         {
             if (string.IsNullOrEmpty(name))
             {
@@ -105,14 +131,7 @@ namespace FluentSmartTextParser.Impl.Fluent
             var property = new SmartTextParserProperty()
             {
                 Type = type,
-                Name = name,
-                Positions = new Dictionary<string, int>()
-                {
-                    { "Position", position }
-                },
-                MinLenght = minLenght,
-                MaxLenght = maxLenght,
-                Required = required
+                Name = name
             };
 
             _context.Properties.Add(property);

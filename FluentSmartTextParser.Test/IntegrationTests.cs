@@ -3,11 +3,7 @@ using FluentSmartTextParser.Interface;
 using FluentSmartTextParser.Model;
 using FluentSmartTextParser.Model.Internal;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FluentSmartTextParser.Test
 {
@@ -111,11 +107,21 @@ namespace FluentSmartTextParser.Test
 
             var result = sut.File(_fileLocation)
                 .DelimitedBy(",")
-                .AddFirstProperty(PropertyType.String, "MockedStringProperty", 0, 0, 0, true)
-                .AddProperty(PropertyType.Integer, "MockedIntegerProperty", 1, 0, 0, true)
-                .AddProperty(PropertyType.Decimal, "MockedDecimalProperty", 2, 0, 0, true)
-                .AddProperty(PropertyType.String, "MockedOptionalStringProperty", 3, 0, 0, false)
-                .AddProperty(PropertyType.Integer, "MockedOptionalIntegerProperty", 4, 0, 0, false)
+                .AddProperty(PropertyType.String, "MockedStringProperty")
+                    .Position(0)
+                    .Required(true)
+                .AddProperty(PropertyType.Integer, "MockedIntegerProperty")
+                    .Position(1)
+                    .Required(true)
+                .AddProperty(PropertyType.Decimal, "MockedDecimalProperty")
+                    .Position(2)
+                    .Required(true)
+                .AddProperty(PropertyType.String, "MockedOptionalStringProperty")
+                    .Position(3)
+                    .Required(false)
+                .AddProperty(PropertyType.Integer, "MockedOptionalIntegerProperty")
+                    .Position(4)
+                    .Required(false)
                 .MapTo<MockedClass>()
                 .Parse();
 
