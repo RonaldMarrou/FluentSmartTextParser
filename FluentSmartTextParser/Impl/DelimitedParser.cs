@@ -23,7 +23,7 @@ namespace FluentSmartTextParser.Impl
         {
             var result = new ParserResult<T>();
 
-            PropertyInfo[] propertyInfoList = typeof(T).GetProperties(BindingFlags.Public);
+            PropertyInfo[] propertyInfoList = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
             var className = typeof(T).Name;
 
@@ -44,7 +44,11 @@ namespace FluentSmartTextParser.Impl
             {
                 var values = line.Split(new string[] { delimitedBy }, StringSplitOptions.None);
 
-                foreach(var property in properties)
+                T newObject = (T)Activator.CreateInstance(typeof(T));
+
+                var hasErrors = false;
+
+                foreach (var property in properties)
                 {
                     int position = property.Positions["Position"];
 
@@ -58,6 +62,8 @@ namespace FluentSmartTextParser.Impl
                                 Description = $"Property {property.Name} out of index at line {lineCount}"
                             });
 
+                            hasErrors = true;
+
                             continue;
                         }
 
@@ -69,14 +75,14 @@ namespace FluentSmartTextParser.Impl
                                 Description = $"Required Property {property.Name} is empty at line {lineCount}"
                             });
 
+                            hasErrors = true;
+
                             continue;
                         }
                     }                    
 
-                    if(values.Length > position)
-                    {
-                        T newObject = (T)Activator.CreateInstance(typeof(T));
-
+                    if(values.Length > position && !values[position].IsNullOrEmpty())
+                    {                      
                         var setter = _setters.First(x => x.GetPropertyType() == property.Type);
 
                         var isSet = setter.Set<T>(newObject, property.Name, values[position]);
@@ -88,13 +94,18 @@ namespace FluentSmartTextParser.Impl
                                 Property = property.Name,
                                 Description = $"Required Property {property.Name} at line {lineCount} is not a valid {setter.GetPropertyTypeName()}"
                             });
+
+                            hasErrors = true;
                         }
-
-                        result.Results.Add(newObject);
-                    }                    
-
-                    lineCount++;
+                    }
                 }
+
+                if (!hasErrors)
+                {
+                    result.Results.Add(newObject);
+                }
+
+                lineCount++;
             }
 
             return result;

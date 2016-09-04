@@ -14,19 +14,26 @@ namespace FluentSmartTextParser.Impl
         {
             List<ParserError> parserErrors = new List<ParserError>();
 
-            var notFoundProperties = properties.Where(f => !propertyInfoList.Any(g => g.Name.Equals(f.Name) && g.PropertyType.Name.Equals(f.Type.GetDotNetType())));
+            var notFoundProperties = properties.Where(f => !propertyInfoList.Any(g => g.Name.Equals(f.Name) && 
+                                    (g.PropertyType.GetTypeName().Equals(f.Type.GetDotNetType()))
+                                    ));
 
             foreach (var notFoundProperty in notFoundProperties)
             {
                 parserErrors.Add(new ParserError()
                 {
                     Property = notFoundProperty.Name,
-                    Description = $"Property {notFoundProperty.Name} not found on class {className} metadata"
+                    Description = $"Property:{notFoundProperty.Name}||Type:{notFoundProperty.Type.GetDotNetType()} not found on class {className} metadata"
                 });
             }
 
-            var wrongNotRequiredProperties = properties.Where(f => !f.Required && f.Type != PropertyType.String && propertyInfoList.Any(
-                x => x.Name.Equals(f) && (x.PropertyType.IsGenericType && x.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
+            if (parserErrors.Any())
+            {
+                return parserErrors;
+            }
+
+            var wrongNotRequiredProperties = properties.Where(f => !f.Required && f.Type != PropertyType.String && !propertyInfoList.Any(
+                x => x.Name.Equals(f.Name) && (x.PropertyType.IsGenericType && x.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
                 ));
 
             foreach (var wrongNotRequiredProperty in wrongNotRequiredProperties)

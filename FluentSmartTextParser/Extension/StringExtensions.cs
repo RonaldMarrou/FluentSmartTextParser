@@ -6,15 +6,15 @@
         {
             if(string.IsNullOrEmpty(value))
             {
-                return false;
+                return true;
             }
 
             if(string.IsNullOrEmpty(value.Trim()))
             {
-                return false;
+                return true;
             }
 
-            return true;
+            return false;
         }
     }
 }

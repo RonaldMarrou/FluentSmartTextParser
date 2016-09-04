@@ -21,7 +21,7 @@ namespace FluentSmartTextParser.Impl
 
         public PropertyType GetPropertyType()
         {
-            return PropertyType.Decimal;
+            return PropertyType.String;
         }
 
         public string GetPropertyTypeName()
