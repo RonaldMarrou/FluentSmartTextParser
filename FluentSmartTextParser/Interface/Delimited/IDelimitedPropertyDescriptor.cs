@@ -4,7 +4,7 @@ namespace FluentSmartTextParser.Interface.Delimited
 {
     public interface IDelimitedPropertyDescriptor
     {
-        IDelimitedPositionDescriptor AddProperty(PropertyType type, string name);
+        IDelimitedPositionDescriptor AddProperty(string name);
 
         IDelimitedPropertyDescriptor Required(bool required);
 

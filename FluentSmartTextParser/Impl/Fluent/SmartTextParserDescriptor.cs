@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace FluentSmartTextParser.Impl.Fluent
 {
-    public class SmartTextParserDescriptor : IDescriptor, IDelimitedDescriptor, IDelimitedPositionDescriptor, IDelimitedPropertyDescriptor, IPositionalDescriptor, IPositionalPropertyDescriptor
+    public class SmartTextParserDescriptor : IDescriptor, IDelimitedDescriptor, IDelimitedPositionDescriptor, IDelimitedPropertyTypeDescriptor, IDelimitedPropertyDescriptor, IPositionalDescriptor, IPositionalPropertyDescriptor
     {
         private readonly SmartTextParserContext _context;
 
@@ -31,7 +31,7 @@ namespace FluentSmartTextParser.Impl.Fluent
             return this;
         }
 
-        public IDelimitedPropertyDescriptor Position(int position)
+        public IDelimitedPropertyTypeDescriptor Position(int position)
         {
             var lastProperty = _context.Properties.Last();
 
@@ -55,6 +55,30 @@ namespace FluentSmartTextParser.Impl.Fluent
         {
             var lastProperty = _context.Properties.Last();
             lastProperty.MaxLenght = maximumLenght;
+
+            return this;
+        }
+
+        public IDelimitedPropertyDescriptor Integer()
+        {
+            var lastProperty = _context.Properties.Last();
+            lastProperty.Type = PropertyType.Integer;
+
+            return this;
+        }
+
+        public IDelimitedPropertyDescriptor Decimal()
+        {
+            var lastProperty = _context.Properties.Last();
+            lastProperty.Type = PropertyType.Decimal;
+
+            return this;
+        }
+
+        public IDelimitedPropertyDescriptor String()
+        {
+            var lastProperty = _context.Properties.Last();
+            lastProperty.Type = PropertyType.String;
 
             return this;
         }
@@ -109,14 +133,7 @@ namespace FluentSmartTextParser.Impl.Fluent
 
         #region Delimited Properties
 
-        public IDelimitedPositionDescriptor AddProperty(PropertyType type, string name)
-        {
-            AddDelimitedProperty(type, name);
-
-            return this;
-        }
-
-        private void AddDelimitedProperty(PropertyType type, string name)
+        public IDelimitedPositionDescriptor AddProperty(string name)
         {
             if (string.IsNullOrEmpty(name))
             {
@@ -130,11 +147,12 @@ namespace FluentSmartTextParser.Impl.Fluent
 
             var property = new SmartTextParserProperty()
             {
-                Type = type,
                 Name = name
             };
 
             _context.Properties.Add(property);
+
+            return this;
         }
 
         #endregion

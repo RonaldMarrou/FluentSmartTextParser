@@ -54,6 +54,7 @@
     <Compile Include="Impl\SmartTextParser.cs" />
     <Compile Include="Interface\Delimited\IDelimitedPositionDescriptor.cs" />
     <Compile Include="Interface\Delimited\IDelimitedPropertyDescriptor.cs" />
+    <Compile Include="Interface\Delimited\IDelimitedPropertyTypeDescriptor.cs" />
     <Compile Include="Interface\IDescriptor.cs" />
     <Compile Include="Interface\IFluentSmartTextParser.cs" />
     <Compile Include="Interface\Delimited\IDelimitedDescriptor.cs" />

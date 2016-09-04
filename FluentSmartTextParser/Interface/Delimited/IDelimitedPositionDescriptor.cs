@@ -4,6 +4,6 @@ namespace FluentSmartTextParser.Interface.Delimited
 {
     public interface IDelimitedPositionDescriptor
     {
-        IDelimitedPropertyDescriptor Position(int position);
+        IDelimitedPropertyTypeDescriptor Position(int position);
     }
 }
