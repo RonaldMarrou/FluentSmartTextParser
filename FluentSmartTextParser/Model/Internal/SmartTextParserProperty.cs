@@ -7,6 +7,8 @@ namespace FluentSmartTextParser.Model.Internal
         public SmartTextParserProperty()
         {
             Positions = new Dictionary<string, int>();
+
+            Custom = new Dictionary<string, string>();
         }
 
         public PropertyType Type { get; set; }
@@ -20,5 +22,7 @@ namespace FluentSmartTextParser.Model.Internal
         public bool Required { get; set; }
 
         public Dictionary<string, int> Positions { get; set; }
+
+        public Dictionary<string, string> Custom { get; set; }
     }
 }

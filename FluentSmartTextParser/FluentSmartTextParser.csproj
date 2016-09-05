@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Extension\StringExtensions.cs" />
     <Compile Include="Impl\BaseParser.cs" />
+    <Compile Include="Impl\DateTimeSetter.cs" />
     <Compile Include="Impl\StringSetter.cs" />
     <Compile Include="Impl\DelimitedParser.cs" />
     <Compile Include="Impl\FluentSmartTextParser.cs" />

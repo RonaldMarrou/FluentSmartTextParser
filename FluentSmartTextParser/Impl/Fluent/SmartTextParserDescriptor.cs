@@ -83,6 +83,20 @@ namespace FluentSmartTextParser.Impl.Fluent
             return this;
         }
 
+        public IDelimitedPropertyDescriptor DateTime(string format = null)
+        {
+            var lastProperty = _context.Properties.Last();
+
+            if (string.IsNullOrEmpty(format))
+            {
+                lastProperty.Custom.Add("DateTimeFormat", format);
+            }
+
+            lastProperty.Type = PropertyType.DateTime;
+
+            return this;
+        }
+
         #endregion
 
         #region Positional Properties

@@ -15,7 +15,8 @@ namespace FluentSmartTextParser.Extension
             {
                 { PropertyType.Integer, "Int32" },
                 { PropertyType.String, "String" },
-                { PropertyType.Decimal, "Decimal" }
+                { PropertyType.Decimal, "Decimal" },
+                { PropertyType.DateTime, "DateTime" }
             };
         }
 

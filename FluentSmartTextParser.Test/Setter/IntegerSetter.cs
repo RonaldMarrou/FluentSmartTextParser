@@ -17,7 +17,7 @@ namespace FluentSmartTextParser.Test.Setter
             FooInteger fooInteger = new FooInteger();
 
             IntegerSetter sut = new IntegerSetter();
-            var isSet = sut.Set(fooInteger, "FooProperty", value);
+            var isSet = sut.Set(fooInteger, "FooProperty", value, null);
 
             Assert.IsTrue(isSet);
             Assert.AreEqual(expected, fooInteger.FooProperty);            
@@ -33,7 +33,7 @@ namespace FluentSmartTextParser.Test.Setter
             FooInteger fooInteger = new FooInteger();
 
             IntegerSetter sut = new IntegerSetter();
-            var isSet = sut.Set(fooInteger, "FooProperty", value);
+            var isSet = sut.Set(fooInteger, "FooProperty", value, null);
 
             Assert.IsFalse(isSet);
         }
@@ -48,7 +48,7 @@ namespace FluentSmartTextParser.Test.Setter
             FooInteger fooInteger = new FooInteger();
 
             IntegerSetter sut = new IntegerSetter();
-            var isSet = sut.Set(fooInteger, field, "0");
+            var isSet = sut.Set(fooInteger, field, "0", null);
 
             Assert.IsFalse(isSet);
         }

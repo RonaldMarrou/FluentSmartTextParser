@@ -17,7 +17,7 @@ namespace FluentSmartTextParser.Test.Setter
             FooDecimal fooDecimal = new FooDecimal();
 
             DecimalSetter sut = new DecimalSetter();
-            var isSet = sut.Set(fooDecimal, "FooProperty", value);
+            var isSet = sut.Set(fooDecimal, "FooProperty", value, null);
 
             Assert.IsTrue(isSet);
             Assert.AreEqual(expected, fooDecimal.FooProperty);            
@@ -34,7 +34,7 @@ namespace FluentSmartTextParser.Test.Setter
             FooDecimal fooDecimal = new FooDecimal();
 
             DecimalSetter sut = new DecimalSetter();
-            var isSet = sut.Set(fooDecimal, "FooProperty", value);
+            var isSet = sut.Set(fooDecimal, "FooProperty", value, null);
 
             Assert.IsFalse(isSet);
         }
@@ -49,7 +49,7 @@ namespace FluentSmartTextParser.Test.Setter
             FooDecimal fooDecimal = new FooDecimal();
 
             DecimalSetter sut = new DecimalSetter();
-            var isSet = sut.Set(fooDecimal, field, "0");
+            var isSet = sut.Set(fooDecimal, field, "0", null);
 
             Assert.IsFalse(isSet);
         }

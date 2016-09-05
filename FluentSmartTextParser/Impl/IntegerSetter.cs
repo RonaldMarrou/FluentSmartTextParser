@@ -1,11 +1,12 @@
 ﻿using FluentSmartTextParser.Interface;
 using FluentSmartTextParser.Model;
+using System.Collections.Generic;
 
 namespace FluentSmartTextParser.Impl
 {
     public class IntegerSetter : ISetter
     {
-        public bool Set<T>(T affectedObject, string propertyName, string value)
+        public bool Set<T>(T affectedObject, string propertyName, string value, Dictionary<string, string> custom)
         {
             int temporary = 0;
 

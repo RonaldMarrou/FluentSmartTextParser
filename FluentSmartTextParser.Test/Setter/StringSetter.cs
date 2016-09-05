@@ -18,7 +18,7 @@ namespace FluentSmartTextParser.Test.Setter
             FooString fooString = new FooString();
 
             StringSetter sut = new StringSetter();
-            var isSet = sut.Set(fooString, "FooProperty", value);
+            var isSet = sut.Set(fooString, "FooProperty", value, null);
 
             Assert.IsTrue(isSet);
             Assert.AreEqual(value, fooString.FooProperty);            
@@ -34,7 +34,7 @@ namespace FluentSmartTextParser.Test.Setter
             FooString fooString = new FooString();
 
             StringSetter sut = new StringSetter();
-            var isSet = sut.Set(fooString, field, "0");
+            var isSet = sut.Set(fooString, field, "0", null);
 
             Assert.IsFalse(isSet);
         }

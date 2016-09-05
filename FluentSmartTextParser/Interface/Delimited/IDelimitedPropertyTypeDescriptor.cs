@@ -9,5 +9,7 @@ namespace FluentSmartTextParser.Interface.Delimited
         IDelimitedPropertyDescriptor Decimal();
 
         IDelimitedPropertyDescriptor String();
+
+        IDelimitedPropertyDescriptor DateTime(string format = null);
     }
 }

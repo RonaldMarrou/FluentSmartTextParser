@@ -85,7 +85,7 @@ namespace FluentSmartTextParser.Impl
                     {                      
                         var setter = _setters.First(x => x.GetPropertyType() == property.Type);
 
-                        var isSet = setter.Set<T>(newObject, property.Name, values[position]);
+                        var isSet = setter.Set<T>(newObject, property.Name, values[position], property.Custom);
 
                         if (!isSet)
                         {

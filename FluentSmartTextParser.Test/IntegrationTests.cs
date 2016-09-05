@@ -3,6 +3,7 @@ using FluentSmartTextParser.Interface;
 using FluentSmartTextParser.Model;
 using FluentSmartTextParser.Model.Internal;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace FluentSmartTextParser.Test
@@ -25,7 +26,8 @@ namespace FluentSmartTextParser.Test
                     {
                         new IntegerSetter(),
                         new DecimalSetter(),
-                        new StringSetter()
+                        new StringSetter(),
+                        new DateTimeSetter()
                     }
                 );
 
@@ -46,12 +48,21 @@ namespace FluentSmartTextParser.Test
                         },
                         new SmartTextParserProperty()
                         {
+                            Name = "MockedDateTimeProperty",
+                            Required = true,
+                            Type = PropertyType.DateTime,
+                            MinLenght = 1,
+                            MaxLenght = 255,
+                            Positions = new Dictionary<string, int> { { "Position", 1 } }
+                        },
+                        new SmartTextParserProperty()
+                        {
                             Name = "MockedIntegerProperty",
                             Required = true,
                             Type = PropertyType.Integer,
                             MinLenght = 0,
                             MaxLenght = 255,
-                            Positions = new Dictionary<string, int> { { "Position", 1 } }
+                            Positions = new Dictionary<string, int> { { "Position", 2 } }
                         },
                         new SmartTextParserProperty()
                         {
@@ -60,7 +71,7 @@ namespace FluentSmartTextParser.Test
                             Type = PropertyType.Decimal,
                             MinLenght = 0,
                             MaxLenght = 255,
-                            Positions = new Dictionary<string, int> { { "Position", 2 } }
+                            Positions = new Dictionary<string, int> { { "Position", 3 } }
                         },
                         new SmartTextParserProperty()
                         {
@@ -69,7 +80,7 @@ namespace FluentSmartTextParser.Test
                             Type = PropertyType.String,
                             MinLenght = 0,
                             MaxLenght = 255,
-                            Positions = new Dictionary<string, int> { { "Position", 3 } }
+                            Positions = new Dictionary<string, int> { { "Position", 4 } }
                         },
                         new SmartTextParserProperty()
                         {
@@ -78,7 +89,7 @@ namespace FluentSmartTextParser.Test
                             Type = PropertyType.Integer,
                             MinLenght = 0,
                             MaxLenght = 255,
-                            Positions = new Dictionary<string, int> { { "Position", 4 } }
+                            Positions = new Dictionary<string, int> { { "Position", 5 } }
                         }
                     }
                 );
@@ -99,7 +110,8 @@ namespace FluentSmartTextParser.Test
                                        {
                                            new IntegerSetter(),
                                            new DecimalSetter(),
-                                           new StringSetter()
+                                           new StringSetter(),
+                                           new DateTimeSetter()
                                        }
                                     )
                             })
@@ -111,20 +123,24 @@ namespace FluentSmartTextParser.Test
                     .Position(0)
                     .String()
                     .Required(true)
-                .AddProperty("MockedIntegerProperty")
+                .AddProperty("MockedDateTimeProperty")
                     .Position(1)
+                    .DateTime("yyyy-MM-dd")
+                    .Required(true)
+                .AddProperty("MockedIntegerProperty")
+                    .Position(2)
                     .Integer()
                     .Required(true)
                 .AddProperty("MockedDecimalProperty")
-                    .Position(2)
+                    .Position(3)
                     .Decimal()
                     .Required(true)
                 .AddProperty("MockedOptionalStringProperty")
-                    .Position(3)
+                    .Position(4)
                     .String()
                     .Required(false)
                 .AddProperty("MockedOptionalIntegerProperty")
-                    .Position(4)
+                    .Position(5)
                     .Integer()
                     .Required(false)
                 .MapTo<MockedClass>()
@@ -137,6 +153,8 @@ namespace FluentSmartTextParser.Test
     public class MockedClass
     {
         public string MockedStringProperty { get; set; }
+
+        public DateTime MockedDateTimeProperty { get; set; }
 
         public int MockedIntegerProperty { get; set; }
 

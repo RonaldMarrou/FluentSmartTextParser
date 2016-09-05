@@ -68,6 +68,7 @@
     <Compile Include="IntegrationTests.cs" />
     <Compile Include="Parser\BaseParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Setter\DateTimeSetterTest.cs" />
     <Compile Include="Setter\StringSetter.cs" />
     <Compile Include="Setter\IntegerSetter.cs" />
     <Compile Include="Setter\DecimalSetterTest.cs" />
