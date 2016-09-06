@@ -1,10 +1,10 @@
-﻿using FluentSmartTextParser.Model;
-
-namespace FluentSmartTextParser.Interface.Positional
+﻿namespace FluentSmartTextParser.Interface.Positional
 {
     public interface IPositionalPropertyDescriptor
     {
-        IPositionalPropertyDescriptor AddProperty(PropertyType type, string name, int startPosition, int endPosition, int minLenght, int maxLenght, bool required = false);
+        IPositionalStartPositionDescriptor AddProperty(string name);
+
+        IPositionalPropertyDescriptor Required(bool required);
 
         IParserDescriptor<T> MapTo<T>();
     }

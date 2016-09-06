@@ -43,11 +43,12 @@
     <Compile Include="Extension\StringExtensions.cs" />
     <Compile Include="Impl\BaseParser.cs" />
     <Compile Include="Impl\DateTimeSetter.cs" />
+    <Compile Include="Impl\Fluent\PositionalDescriptor.cs" />
     <Compile Include="Impl\StringSetter.cs" />
     <Compile Include="Impl\DelimitedParser.cs" />
     <Compile Include="Impl\FluentSmartTextParser.cs" />
     <Compile Include="Impl\Fluent\ParserDescriptor.cs" />
-    <Compile Include="Impl\Fluent\SmartTextParserDescriptor.cs" />
+    <Compile Include="Impl\Fluent\DelimitedDescriptor.cs" />
     <Compile Include="Impl\DecimalSetter.cs" />
     <Compile Include="Impl\IntegerSetter.cs" />
     <Compile Include="Impl\ParserFactory.cs" />
@@ -63,10 +64,13 @@
     <Compile Include="Interface\IParserDescriptor.cs" />
     <Compile Include="Interface\IParserFactory.cs" />
     <Compile Include="Interface\ISetter.cs" />
+    <Compile Include="Interface\Positional\IPositionalPropertyTypeDescriptor.cs" />
+    <Compile Include="Interface\Positional\IPositionalEndPositionDescriptor.cs" />
     <Compile Include="Interface\Positional\IPositionalPropertyDescriptor.cs" />
     <Compile Include="Interface\ISmartTextParser.cs" />
     <Compile Include="Interface\Positional\IPositionalDescriptor.cs" />
     <Compile Include="Extension\DotNetType.cs" />
+    <Compile Include="Interface\Positional\IPositionalStartPositionDescriptor.cs" />
     <Compile Include="Model\Internal\SmartTextParserProperty.cs" />
     <Compile Include="Model\Internal\SmartTextParserContext.cs" />
     <Compile Include="Model\ParserError.cs" />

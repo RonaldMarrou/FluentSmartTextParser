@@ -6,10 +6,6 @@
 
         IDelimitedPropertyDescriptor Required(bool required);
 
-        IDelimitedPropertyDescriptor MinimumLenght(int miniumLenght);
-
-        IDelimitedPropertyDescriptor MaximumLenght(int maximumLenght);
-
         IParserDescriptor<T> MapTo<T>();
     }
 }

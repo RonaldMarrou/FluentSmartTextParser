@@ -13,9 +13,9 @@ namespace FluentSmartTextParser.Impl.Fluent
             _context = context;
         }
 
-        public ParserResult<T> Parse()
+        public ParserResult<T> Parse(string file)
         {
-            return _context.SmartTextParser.Parse<T>(_context.File, _context.TextSchemaType, _context.SchemaFields, _context.Properties);
+            return _context.SmartTextParser.Parse<T>(file, _context.TextSchemaType, _context.SchemaFields, _context.Properties);
         }
     }
 }

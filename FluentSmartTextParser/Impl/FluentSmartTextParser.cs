@@ -1,5 +1,7 @@
 ﻿using FluentSmartTextParser.Impl.Fluent;
 using FluentSmartTextParser.Interface;
+using FluentSmartTextParser.Interface.Delimited;
+using FluentSmartTextParser.Interface.Positional;
 
 namespace FluentSmartTextParser.Impl
 {
@@ -12,9 +14,14 @@ namespace FluentSmartTextParser.Impl
             _smartTextParser = smartTextParser;
         }
 
-        public IDescriptor File(string file)
+        public IDelimitedDescriptor DelimitedBy(string delimitedBy)
         {
-            return new SmartTextParserDescriptor(file, _smartTextParser);
+            return new DelimitedDescriptor(_smartTextParser, delimitedBy);
+        }
+
+        public IPositionalDescriptor Positional()
+        {
+            return new PositionalDescriptor(_smartTextParser);
         }
     }
 }

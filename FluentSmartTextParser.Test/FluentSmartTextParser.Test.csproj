@@ -83,6 +83,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Files\PositionalTextFile.txt" />
     <Content Include="Files\DelimitedTextFile.txt" />
   </ItemGroup>
   <Choose>

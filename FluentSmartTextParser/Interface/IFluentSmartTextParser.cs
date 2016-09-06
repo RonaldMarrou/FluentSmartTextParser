@@ -1,7 +1,9 @@
-﻿namespace FluentSmartTextParser.Interface
+﻿using FluentSmartTextParser.Interface.Delimited;
+
+namespace FluentSmartTextParser.Interface
 {
     public interface IFluentSmartTextParser
     {
-        IDescriptor File(string file);
+        IDelimitedDescriptor DelimitedBy(string delimitedBy);
     }
 }

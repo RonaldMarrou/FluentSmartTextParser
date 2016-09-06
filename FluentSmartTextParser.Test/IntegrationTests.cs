@@ -10,12 +10,14 @@ namespace FluentSmartTextParser.Test
 {
     public class IntegrationTests
     {
-        private string _fileLocation;
+        private string _delimitedFileLocation;
+        private string _positionalFileLocation;
 
         [SetUp]
         public void SetUpTest()
         {
-            _fileLocation = @"..\..\Files\DelimitedTextFile.txt";
+            _delimitedFileLocation = @"..\..\Files\DelimitedTextFile.txt";
+            _positionalFileLocation = @"..\..\Files\PositionalTextFile.txt";
         }
 
         [Test]
@@ -33,7 +35,7 @@ namespace FluentSmartTextParser.Test
 
             var result = sut.Parse<MockedClass>
                 (
-                    _fileLocation,
+                    _delimitedFileLocation,
                     new Dictionary<string, string>() { { "DelimitedBy", "," } },
                     new List<SmartTextParserProperty>()
                     {
@@ -42,8 +44,6 @@ namespace FluentSmartTextParser.Test
                             Name = "MockedStringProperty",
                             Required = true,
                             Type = PropertyType.String,
-                            MinLenght = 0,
-                            MaxLenght = 255,
                             Positions = new Dictionary<string, int> { { "Position", 0 } }
                         },
                         new SmartTextParserProperty()
@@ -51,8 +51,6 @@ namespace FluentSmartTextParser.Test
                             Name = "MockedDateTimeProperty",
                             Required = true,
                             Type = PropertyType.DateTime,
-                            MinLenght = 1,
-                            MaxLenght = 255,
                             Positions = new Dictionary<string, int> { { "Position", 1 } }
                         },
                         new SmartTextParserProperty()
@@ -60,8 +58,6 @@ namespace FluentSmartTextParser.Test
                             Name = "MockedIntegerProperty",
                             Required = true,
                             Type = PropertyType.Integer,
-                            MinLenght = 0,
-                            MaxLenght = 255,
                             Positions = new Dictionary<string, int> { { "Position", 2 } }
                         },
                         new SmartTextParserProperty()
@@ -69,8 +65,6 @@ namespace FluentSmartTextParser.Test
                             Name = "MockedDecimalProperty",
                             Required = true,
                             Type = PropertyType.Decimal,
-                            MinLenght = 0,
-                            MaxLenght = 255,
                             Positions = new Dictionary<string, int> { { "Position", 3 } }
                         },
                         new SmartTextParserProperty()
@@ -78,8 +72,6 @@ namespace FluentSmartTextParser.Test
                             Name = "MockedOptionalStringProperty",
                             Required = false,
                             Type = PropertyType.String,
-                            MinLenght = 0,
-                            MaxLenght = 255,
                             Positions = new Dictionary<string, int> { { "Position", 4 } }
                         },
                         new SmartTextParserProperty()
@@ -87,8 +79,6 @@ namespace FluentSmartTextParser.Test
                             Name = "MockedOptionalIntegerProperty",
                             Required = false,
                             Type = PropertyType.Integer,
-                            MinLenght = 0,
-                            MaxLenght = 255,
                             Positions = new Dictionary<string, int> { { "Position", 5 } }
                         }
                     }
@@ -117,8 +107,7 @@ namespace FluentSmartTextParser.Test
                             })
                 ));
 
-            var result = sut.File(_fileLocation)
-                .DelimitedBy(",")
+            var result = sut.DelimitedBy(",")
                 .AddProperty("MockedStringProperty")
                     .Position(0)
                     .String()
@@ -144,7 +133,63 @@ namespace FluentSmartTextParser.Test
                     .Integer()
                     .Required(false)
                 .MapTo<MockedClass>()
-                .Parse();
+                .Parse(_delimitedFileLocation);
+
+            Assert.AreEqual(8, result.Results.Count);
+        }
+
+        [Test]
+        public void Parse_CheckPositionalTextFileWithFluent_ResultReturned()
+        {
+            var sut = new Impl.FluentSmartTextParser(
+                    new SmartTextParser(
+                        new ParserFactory(
+                            new IParser[]
+                            {
+                                new DelimitedParser(
+                                       new ISetter[]
+                                       {
+                                           new IntegerSetter(),
+                                           new DecimalSetter(),
+                                           new StringSetter(),
+                                           new DateTimeSetter()
+                                       }
+                                    ),
+                                new PositionalParser(
+                                       new ISetter[]
+                                       {
+                                           new IntegerSetter(),
+                                           new DecimalSetter(),
+                                           new StringSetter(),
+                                           new DateTimeSetter()
+                                       }
+                                    )
+                            })
+                ));
+
+            var result = sut.Positional()
+                    .AddProperty("MockedStringProperty")
+                        .StartPosition(0)
+                        .EndPosition(8)
+                        .String()
+                        .Required(true)
+                    .AddProperty("MockedDateTimeProperty")
+                        .StartPosition(8)
+                        .EndPosition(18)
+                        .DateTime("yyyy-MM-dd")
+                        .Required(true)
+                    .AddProperty("MockedDecimalProperty")
+                        .StartPosition(18)
+                        .EndPosition(26)
+                        .Decimal()
+                        .Required(true)
+                    .AddProperty("MockedOptionalStringProperty")
+                        .StartPosition(26)
+                        .EndPosition(52)
+                        .String()
+                        .Required(false)
+                .MapTo<MockedClass>()
+                .Parse(_positionalFileLocation);
 
             Assert.AreEqual(8, result.Results.Count);
         }
